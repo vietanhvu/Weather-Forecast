@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nabtest.LoadingState
 import com.example.nabtest.models.Forecast
-import com.example.nabtest.models.ForecastCity
 import com.example.nabtest.repositories.ForecastRepository
+import com.example.nabtest.utils.SchedulerProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -13,8 +13,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: ForecastRepository) : ViewModel() {
-    private val forecastsLiveData = MutableLiveData<List<Forecast>?>()
+class MainViewModel @Inject constructor(
+    private val repository: ForecastRepository,
+    private val schedulerProvider: SchedulerProvider
+) : ViewModel() {
+    val listForecast = MutableLiveData<List<Forecast>?>()
 
     val queryString = MutableLiveData<String>()
 
@@ -28,8 +31,6 @@ class MainViewModel @Inject constructor(private val repository: ForecastReposito
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun getForecasts() = forecastsLiveData
-
     fun search(isRefresh: Boolean = false) {
         errorInputText.value = null
         val qString = if (isRefresh) currentQueryString else queryString.value
@@ -40,19 +41,21 @@ class MainViewModel @Inject constructor(private val repository: ForecastReposito
             loadingState.value = LoadingState.ERROR
             return
         }
+        currentQueryString = qString
 
         loadingState.value = if (isRefresh) LoadingState.REFRESHING else LoadingState.LOADING
 
-        compositeDisposable.add(repository.getForecasts(qString.lowercase(), isRefresh)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({
-                forecastsLiveData.value = it.forecasts
-                loadingState.value = LoadingState.SUCCESS
-            }, {
-                it.printStackTrace()
-                loadingState.value = LoadingState.ERROR
-                errorText.value = "Error loading data."
-            })
+        compositeDisposable.add(
+            repository.getForecasts(qString.lowercase(), isRefresh)
+                .subscribeOn(schedulerProvider.io)
+                .observeOn(schedulerProvider.ui).subscribe({
+                    listForecast.value = it.forecasts
+                    loadingState.value = LoadingState.SUCCESS
+                }, {
+                    it.printStackTrace()
+                    loadingState.value = LoadingState.ERROR
+                    errorText.value = "Error loading data."
+                })
         )
     }
 

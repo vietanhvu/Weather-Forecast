@@ -37,7 +37,7 @@ class MainFragment : Fragment() {
         forecastsAdapter = ForecastsAdapter()
 
         mainViewModel.apply {
-            getForecasts().observe(viewLifecycleOwner) {
+            listForecast.observe(viewLifecycleOwner) {
                 forecastsAdapter.submitList(it)
             }
             loadingState.observe(viewLifecycleOwner) {

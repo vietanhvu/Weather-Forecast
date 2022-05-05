@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:text="There is no data to show"
             android:textSize="20sp"
-            android:visibility="@{viewModel.getForecasts() == null || viewModel.getForecasts().size == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.listForecast == null || viewModel.listForecast.size() == 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

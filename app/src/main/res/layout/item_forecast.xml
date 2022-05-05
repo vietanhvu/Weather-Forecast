@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="forecast"
+            type="com.example.nabtest.models.Forecast" />
+
+        <import type="com.example.nabtest.utils.DateTimeUtilsKt" />
+        <import type="com.example.nabtest.utils.UtilsKt" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{`Date: ` + DateTimeUtilsKt.convertToDate(forecast.dt * 1000)}"
+            tools:text="Date: Tue, 10 Mar 2020" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{`Average temperature: ` + UtilsKt.averageTemp(forecast.temp) + `\u2103`}"
+            tools:text="Average temperature: 1031" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{`Pressure: ` + forecast.pressure}"
+            tools:text="Pressure: 1031" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{`Humidity: ` + forecast.humidity + `%`}"
+            tools:text="Humidity: 71%" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{`Description: ` + forecast.weather.get(0).description}"
+            tools:text="Description: light rain" />
+
+    </LinearLayout>
+</layout>

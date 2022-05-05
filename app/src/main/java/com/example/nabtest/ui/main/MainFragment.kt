@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
                     Snackbar.make(
                         binding.root,
                         it,
-                        Snackbar.LENGTH_SHORT // How long to display the message.
+                        Snackbar.LENGTH_SHORT
                     ).show()
                     mainViewModel.errorText.value = null
                 }
@@ -63,10 +63,7 @@ class MainFragment : Fragment() {
                 adapter = forecastsAdapter
             }
             inputText.setOnEditorActionListener { _, _, event ->
-                // If triggered by an enter key, this is the event; otherwise, this is null.
                 if (event != null) {
-                    // if shift key is down, then we want to insert the '\n' char in the TextView;
-                    // otherwise, the default action is to send the message.
                     if (!event.isShiftPressed) {
                         mainViewModel.search()
                         return@setOnEditorActionListener true
@@ -84,12 +81,6 @@ class MainFragment : Fragment() {
         }
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        mainViewModel.search()
     }
 
     override fun onDestroy() {

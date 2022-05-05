@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:hint="Enter city name"
+            android:hint="Enter city name, i.e: hanoi"
             app:error="@{viewModel.errorInputText}"
             app:layout_constraintEnd_toStartOf="@+id/button_search"
             app:layout_constraintStart_toStartOf="parent"

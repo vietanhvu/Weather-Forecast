@@ -1,8 +1,10 @@
 package com.example.nabtest
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.nabtest.ui.main.MainFragment
+import com.example.nabtest.utils.RootUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,6 +17,17 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (RootUtils.isDeviceRooted()) {
+            AlertDialog.Builder(this)
+                .setMessage("You can not use this app on a rooted device")
+                .setPositiveButton("OK") { _, _ -> finish() }
+                .setCancelable(false)
+                .create().show()
         }
     }
 }

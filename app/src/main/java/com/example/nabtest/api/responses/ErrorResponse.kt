@@ -1,4 +1,4 @@
-package com.example.nabtest.api.response
+package com.example.nabtest.api.responses
 
 data class ErrorResponse(
     val cod: String,

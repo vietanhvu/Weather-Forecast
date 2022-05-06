@@ -1,6 +1,6 @@
 package com.example.nabtest.utils
 
-import com.example.nabtest.api.response.ErrorResponse
+import com.example.nabtest.api.responses.ErrorResponse
 import com.google.gson.Gson
 import retrofit2.HttpException
 import retrofit2.Response

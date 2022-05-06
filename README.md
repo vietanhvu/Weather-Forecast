@@ -76,6 +76,8 @@ H --> I([Return new data])
 3. Open project using Android Studio
 4. Build the app as normal
 
+Or download and install the apk [here](https://drive.google.com/file/d/1FhnOxT1tEPqAeq-rdV8UOLboFXDs5nS9/view?usp=sharing)
+
 ## Room for improvements
 
 - Separate the data layer (repository, data sources, data models, api services...) into a separate module, for a cleaner app structure

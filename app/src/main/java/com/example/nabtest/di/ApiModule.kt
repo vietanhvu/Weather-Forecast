@@ -1,6 +1,7 @@
 package com.example.nabtest.di
 
 import com.example.nabtest.api.ApiService
+import com.example.nabtest.utils.RxErrorHandlingCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +39,8 @@ object ApiModule {
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+//        .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+        .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
         .build()
 
     @Singleton

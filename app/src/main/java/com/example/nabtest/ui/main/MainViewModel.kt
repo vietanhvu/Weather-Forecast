@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(
                 }, {
                     it.printStackTrace()
                     loadingState.value = LoadingState.ERROR
-                    errorText.value = "Error loading data."
+                    errorText.value = it.message
                 })
         )
     }

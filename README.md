@@ -57,11 +57,12 @@ Main language: Kotlin
 graph LR
 A([User inputs data]) --> B{Is input data valid?}
 B --No--> C([Show error and return])
-B --Yes--> K([Is this a refresh call?])
-K --No--> D{Is data available in cache?}
-K --Yes--> F[Perform api call]
-D --Yes--> E([Return cached data])
-D --No--> F
+B --Yes--> K{Is this a refresh call?}
+K --No--> D[Get data from cache]
+D --> L{Error or Empty?}
+L --Yes--> F[Perform api call]
+L --No--> E([Return cached data])
+K --Yes--> F
 F -->G{Is there any error?}
 G --Yes--> C
 G --No--> H[Save data to cache]
@@ -82,4 +83,6 @@ H --> I([Return new data])
 - Since this is just a simple app, there is no need for base classes. But for the real project, adding base classes is a must.
 - All strings are hard-coded, should not do this in real project
 - Divide view model's functions into smaller one for easier and better unit test writing, as well as extending
+- This project is using a simple version of cache, in which store the response json string in shared-preferences. This should be put in local database for larger, more complex data.
+- Current cache refresh mechanism is very simple too: We clear all the cache when app opened and refresh a specific city when user performs a pull to refresh.  
 - Use Debounce for searching while typing instead of clicking on Search button

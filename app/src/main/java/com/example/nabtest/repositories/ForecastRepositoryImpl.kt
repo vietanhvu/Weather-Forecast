@@ -1,6 +1,7 @@
 package com.example.nabtest.repositories
 
 import com.example.nabtest.models.ForecastCity
+import io.reactivex.rxjava3.core.Maybe
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
@@ -13,7 +14,8 @@ class ForecastRepositoryImpl @Inject constructor(
     override fun getForecasts(city: String, isRefresh: Boolean): Single<ForecastCity> {
         return if (isRefresh) getForecastFromRemoteThenSaveToLocal(city) else localDataSource.getForecasts(
             city
-        ).switchIfEmpty(getForecastFromRemoteThenSaveToLocal(city))
+        ).onErrorResumeNext { Maybe.empty() }
+            .switchIfEmpty(getForecastFromRemoteThenSaveToLocal(city))
     }
 
     private fun getForecastFromRemoteThenSaveToLocal(city: String): Single<ForecastCity> =
